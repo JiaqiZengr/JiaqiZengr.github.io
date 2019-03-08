@@ -1,0 +1,35 @@
+# Site settings
+name: Jiaqi Zeng
+email: 947231620@qq.com
+author: Jiaqi Zeng
+url: https://JiaqiZengr.github.io
+resume_site: https://JiaqiZengr.github.io
+github: https://github.com/JiaqiZengr/
+baseurl: ""
+description: Welcome to Jiaqi's space.
+meta_description: 曾佳琪;个人博客
+motto: Best wishes
+# banner: 
+
+#permalink: /:categories/:year/:month/:day/:title/
+permalink: /:title/
+paginate: 10
+
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
+
+github_username: JiaqiZengr
+
+# Build settings
+markdown: kramdown
+kmarkdown:
+  auto_ids: true
+  toc_levels: 1..3
+
+# Plugins
+plugins: [jekyll-paginate]
+
+# Analysis
+# baidu_analysis: 000
+
+# gems: [jekyll-paginate]
+# exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'Rakefile']
