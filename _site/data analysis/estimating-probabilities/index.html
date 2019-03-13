@@ -140,17 +140,16 @@
 <h2 id="definition-of-mle-and-map">Definition of MLE and MAP</h2>
 
 <ul>
-  <li>
-    <p>Maximum likelihood estimation (MLE)’s principle is that if we observe training data $D$,  we should choose the value of $\theta$ that makes $D$ most probable.</p>
-
-    <p><img src="/styles/images/estimating-probabilities/1.png" alt="img1" /></p>
-  </li>
-  <li>
-    <p>Maximium a posteriori probability (MAP) estimation is to choose the most probable value of $\theta$, given the observed training data plus a prior probability distribution $P(\theta)$ which captures prior knowledge or assumptions about the value of $\theta$.</p>
-
-    <p><img src="/styles/images/estimating-probabilities/2.png" alt="img1" /></p>
-  </li>
+  <li>Maximum likelihood estimation (MLE)’s principle is that if we observe training data $D$,  we should choose the value of $\theta$ that makes $D$ most probable.</li>
 </ul>
+
+<script type="math/tex; mode=display">\hat{\theta}^{MLE} = \arg\max_\theta{P(D|\theta)}</script>
+
+<ul>
+  <li>Maximium a posteriori probability (MAP) estimation is to choose the most probable value of $\theta$, given the observed training data plus a prior probability distribution $P(\theta)$ which captures prior knowledge or assumptions about the value of $\theta$.</li>
+</ul>
+
+<script type="math/tex; mode=display">\hat{\theta}^{MAP} = \arg\max_\theta{P(\theta|D)}</script>
 
 <h2 id="an-example-of-coin-flips">An example of coin flips</h2>
 
@@ -173,21 +172,28 @@
 
 <p>The maximum likelihood (MLE) principle involves choosing $\theta$ to maximize $P(D|\theta)$. We can write formula as follow:</p>
 
-<p><img src="/styles/images/estimating-probabilities/3.png" alt="img10000" /></p>
+<script type="math/tex; mode=display">P(D=\langle{\alpha_1,\alpha_0}\rangle|\theta) = \theta^{\alpha_1}(1-\theta)^{\alpha_0}</script>
 
 <p>This likelihood function is often written $L(\theta) = P(D|\theta)$. Notice that maximizing $P(D|\theta)$ with respect to $\theta$ is equivalent to maximizing its logarithm, $\ln P(D|\theta) $ with respect to $\theta$, because $\ln x$ increases monotonically with $x$. So we write $l(\theta) = \ln P(D|\theta)$ and find $\theta$ which maxmizes $l(\theta)$.</p>
 
-<p><img src="/styles/images/estimating-probabilities/4.png" alt="img1" /></p>
-
-<p><img src="/styles/images/estimating-probabilities/5.png" alt="img1" /></p>
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{equation}
+\begin{split}
+\frac{\partial{l(\theta)}}{\partial{\theta}} &= \frac{\partial\ln{P(D|\theta)}}{\partial{\theta}} \\
+&= \frac{\partial\ln{[\theta^{\alpha_1}(1-\theta)^{\alpha_0}]}}{\partial{\theta}} \\
+&= \frac{\partial[\alpha_1\ln{\theta}+\alpha_0\ln(1-\theta)]}{\partial{\theta}} \\
+&= \alpha_1\frac{\partial\ln\theta}{\partial\theta} + \alpha_0\frac{\partial\ln(1-\theta)}{\partial\theta} \\ 
+&= \alpha_1\frac{1}{\theta} - \alpha_0\frac{1}{1-\theta}
+\end{split}
+\end{equation} %]]></script>
 
 <p>We let it equals to zero and simplify it. We can get:</p>
 
-<p><img src="/styles/images/estimating-probabilities/6.png" alt="img1" /></p>
+<script type="math/tex; mode=display">\hat{\theta} = \frac{\alpha_1}{\alpha_1+\alpha_0}</script>
 
 <p>Also, given observed training data producing $\alpha_1$ observed “heads”, and $\alpha_2$ observed ”tails”, plus prior information expressed by introducing  imaginary “heads” and  imaginary “tails”, output the estimate:</p>
 
-<p><img src="/styles/images/estimating-probabilities/7.png" alt="img1" /></p>
+<script type="math/tex; mode=display">\hat{\theta} = \frac{\alpha_1+\gamma_1}{(\alpha_1+\gamma_1)+(\alpha_0+\gamma_0)}</script>
 
 <h2 id="more-about-map-and-mle">More about MAP and MLE</h2>
 
