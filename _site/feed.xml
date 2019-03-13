@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <description>Welcome to Jiaqi's space.</description>
+    <link>https://JiaqiZengr.github.io/</link>
+    <atom:link href="https://JiaqiZengr.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 13 Mar 2019 22:04:40 +0800</pubDate>
+    <lastBuildDate>Wed, 13 Mar 2019 22:04:40 +0800</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Estimating Probabilities</title>
+        <description>&lt;ol id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#definition-of-mle-and-map&quot; id=&quot;markdown-toc-definition-of-mle-and-map&quot;&gt;Definition of MLE and MAP&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#an-example-of-coin-flips&quot; id=&quot;markdown-toc-an-example-of-coin-flips&quot;&gt;An example of coin flips&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#inference&quot; id=&quot;markdown-toc-inference&quot;&gt;Inference&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#more-about-map-and-mle&quot; id=&quot;markdown-toc-more-about-map-and-mle&quot;&gt;More about MAP and MLE&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#reference&quot; id=&quot;markdown-toc-reference&quot;&gt;Reference&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Estimating probabilities is important in statistical research. Today we will talk about two most common approaches to estimate probabilities: maximum likelihood estimation (MLE) and maximum a posteriori estimation (MAP).&lt;/p&gt;
+
+&lt;h2 id=&quot;definition-of-mle-and-map&quot;&gt;Definition of MLE and MAP&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Maximum likelihood estimation (MLE)’s principle is that if we observe training data $D$,  we should choose the value of $\theta$ that makes $D$ most probable.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\theta}^{MLE} = \arg\max_\theta{P(D|\theta)}&lt;/script&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Maximium a posteriori probability (MAP) estimation is to choose the most probable value of $\theta$, given the observed training data plus a prior probability distribution $P(\theta)$ which captures prior knowledge or assumptions about the value of $\theta$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\theta}^{MAP} = \arg\max_\theta{P(\theta|D)}&lt;/script&gt;
+
+&lt;h2 id=&quot;an-example-of-coin-flips&quot;&gt;An example of coin flips&lt;/h2&gt;
+
+&lt;p&gt;Imagine we flip coins many times, let $X = 1$ if it turns up heads and $X=0$ if it turns up tails. We should estimate the probability that it will turn up heads, that is, to estimate $P(X = 1)$.&lt;/p&gt;
+
+&lt;p&gt;We flip the coin n times and observe that it turns up heads $\alpha_0$ times, and tails $\alpha_1$ times. $n =\alpha_0 + \alpha_1$.&lt;/p&gt;
+
+&lt;p&gt;There are two assumptions:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;The outcomes of the flips are independent. That means the result of one coin flip has no influence on other coin flips.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The outcomes are identically distributed. That means each coin flip has the same value of $\theta$.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;inference&quot;&gt;Inference&lt;/h2&gt;
+
+&lt;p&gt;The maximum likelihood (MLE) principle involves choosing $\theta$ to maximize $P(D|\theta)$. We can write formula as follow:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P(D=\langle{\alpha_1,\alpha_0}\rangle|\theta) = \theta^{\alpha_1}(1-\theta)^{\alpha_0}&lt;/script&gt;
+
+&lt;p&gt;This likelihood function is often written $L(\theta) = P(D|\theta)$. Notice that maximizing $P(D|\theta)$ with respect to $\theta$ is equivalent to maximizing its logarithm, $\ln P(D|\theta) $ with respect to $\theta$, because $\ln x$ increases monotonically with $x$. So we write $l(\theta) = \ln P(D|\theta)$ and find $\theta$ which maxmizes $l(\theta)$.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{equation}
+\begin{split}
+\frac{\partial{l(\theta)}}{\partial{\theta}} &amp;= \frac{\partial\ln{P(D|\theta)}}{\partial{\theta}} \\
+&amp;= \frac{\partial\ln{[\theta^{\alpha_1}(1-\theta)^{\alpha_0}]}}{\partial{\theta}} \\
+&amp;= \frac{\partial[\alpha_1\ln{\theta}+\alpha_0\ln(1-\theta)]}{\partial{\theta}} \\
+&amp;= \alpha_1\frac{\partial\ln\theta}{\partial\theta} + \alpha_0\frac{\partial\ln(1-\theta)}{\partial\theta} \\ 
+&amp;= \alpha_1\frac{1}{\theta} - \alpha_0\frac{1}{1-\theta}
+\end{split}
+\end{equation} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;We let it equals to zero and simplify it. We can get:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\theta} = \frac{\alpha_1}{\alpha_1+\alpha_0}&lt;/script&gt;
+
+&lt;p&gt;Also, given observed training data producing $\alpha_1$ observed “heads”, and $\alpha_2$ observed ”tails”, plus prior information expressed by introducing  imaginary “heads” and  imaginary “tails”, output the estimate:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\theta} = \frac{\alpha_1+\gamma_1}{(\alpha_1+\gamma_1)+(\alpha_0+\gamma_0)}&lt;/script&gt;
+
+&lt;h2 id=&quot;more-about-map-and-mle&quot;&gt;More about MAP and MLE&lt;/h2&gt;
+
+&lt;p&gt;What we should know is that MAP needs background assumptions of its value which MLE doesn’t need. In other words, MAP assumes background knowledge is available.&lt;/p&gt;
+
+&lt;p&gt;If MAP priors are correct, then MAP is a better estimation than MLE. But if MAP priors are incorrect, MLE is better.&lt;/p&gt;
+
+&lt;p&gt;Follow pictures assume $\theta = 0.3$ and picture 1 has correct MAP priors but picture doesn’t, the blue line if estimation of MLE and the red line is estimation of MAP. We can discover that MAP is closer to real $\theta$ when MAP has correct priors. On the contrary, MLE is closer to real $\theta$ when MAP priors are wrong. Also, as the size of the data grows, the MLE and MAP estimates converge toward each other, and toward the correct estimate for $\theta$.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/styles/images/estimating-probabilities/8.png&quot; alt=&quot;img1&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Mitchell, ESTIMATING PROBABILITIES: MLE AND MAP&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Fri, 08 Mar 2019 14:32:00 +0800</pubDate>
+        <link>https://JiaqiZengr.github.io/data%20analysis/estimating-probabilities/</link>
+        <guid isPermaLink="true">https://JiaqiZengr.github.io/data%20analysis/estimating-probabilities/</guid>
+        
+        <category>Estimating Probabilities</category>
+        
+        
+        <category>Data Analysis</category>
+        
+      </item>
+    
+  </channel>
+</rss>
