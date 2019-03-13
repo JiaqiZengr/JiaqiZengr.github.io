@@ -15,11 +15,15 @@ Estimating probabilities is important in statistical research. Today we will tal
 
 * Maximum likelihood estimation (MLE)’s principle is that if we observe training data $D$,  we should choose the value of $\theta$ that makes $D$ most probable.
 
-    ![img1](/styles/images/estimating-probabilities/1.png)
+$$
+\hat{\theta}^{MLE} = \arg\max_\theta{P(D|\theta)}
+$$
 
 * Maximium a posteriori probability (MAP) estimation is to choose the most probable value of $\theta$, given the observed training data plus a prior probability distribution $P(\theta)$ which captures prior knowledge or assumptions about the value of $\theta$.
 
-    ![img1](/styles/images/estimating-probabilities/2.png)
+$$
+\hat{\theta}^{MAP} = \arg\max_\theta{P(\theta|D)}
+$$
 
 ## An example of coin flips
 
@@ -37,21 +41,35 @@ There are two assumptions:
 
 The maximum likelihood (MLE) principle involves choosing $\theta$ to maximize $P(D\|\theta)$. We can write formula as follow:
 
-![img10000](/styles/images/estimating-probabilities/3.png)
+$$
+P(D=\langle{\alpha_1,\alpha_0}\rangle|\theta) = \theta^{\alpha_1}(1-\theta)^{\alpha_0}
+$$
 
 This likelihood function is often written $L(\theta) = P(D\|\theta)$. Notice that maximizing $P(D\|\theta)$ with respect to $\theta$ is equivalent to maximizing its logarithm, $\ln P(D\|\theta) $ with respect to $\theta$, because $\ln x$ increases monotonically with $x$. So we write $l(\theta) = \ln P(D\|\theta)$ and find $\theta$ which maxmizes $l(\theta)$.
 
-![img1](/styles/images/estimating-probabilities/4.png)
-
-![img1](/styles/images/estimating-probabilities/5.png)
+$$
+\begin{equation}
+\begin{split}
+\frac{\partial{l(\theta)}}{\partial{\theta}} &= \frac{\partial\ln{P(D|\theta)}}{\partial{\theta}} \\
+&= \frac{\partial\ln{[\theta^{\alpha_1}(1-\theta)^{\alpha_0}]}}{\partial{\theta}} \\
+&= \frac{\partial[\alpha_1\ln{\theta}+\alpha_0\ln(1-\theta)]}{\partial{\theta}} \\
+&= \alpha_1\frac{\partial\ln\theta}{\partial\theta} + \alpha_0\frac{\partial\ln(1-\theta)}{\partial\theta} \\ 
+&= \alpha_1\frac{1}{\theta} - \alpha_0\frac{1}{1-\theta}
+\end{split}
+\end{equation}
+$$
 
 We let it equals to zero and simplify it. We can get:
 
-![img1](/styles/images/estimating-probabilities/6.png)
+$$
+\hat{\theta} = \frac{\alpha_1}{\alpha_1+\alpha_0}
+$$
 
 Also, given observed training data producing $\alpha_1$ observed “heads”, and $\alpha_2$ observed ”tails”, plus prior information expressed by introducing  imaginary “heads” and  imaginary “tails”, output the estimate:
 
-![img1](/styles/images/estimating-probabilities/7.png)
+$$
+\hat{\theta} = \frac{\alpha_1+\gamma_1}{(\alpha_1+\gamma_1)+(\alpha_0+\gamma_0)}
+$$
 
 ## More about MAP and MLE
 
