@@ -5,13 +5,21 @@
     <description>Welcome to Jiaqi's space.</description>
     <link>https://JiaqiZengr.github.io/</link>
     <atom:link href="https://JiaqiZengr.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 26 Mar 2019 21:06:58 +0800</pubDate>
-    <lastBuildDate>Tue, 26 Mar 2019 21:06:58 +0800</lastBuildDate>
+    <pubDate>Tue, 26 Mar 2019 21:29:54 +0800</pubDate>
+    <lastBuildDate>Tue, 26 Mar 2019 21:29:54 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
         <title>Linear Regression Empirical Analysis in R</title>
-        <description>&lt;p&gt;Today we will use R to establish a linear relationship between the price of a car and mpg(mileage).&lt;/p&gt;
+        <description>&lt;ol id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#know-about-data&quot; id=&quot;markdown-toc-know-about-data&quot;&gt;Know about data&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#relationship-between-price-and-mpg&quot; id=&quot;markdown-toc-relationship-between-price-and-mpg&quot;&gt;Relationship Between Price and Mpg&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#linear-regression&quot; id=&quot;markdown-toc-linear-regression&quot;&gt;Linear Regression&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#conclusion&quot; id=&quot;markdown-toc-conclusion&quot;&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#reference&quot; id=&quot;markdown-toc-reference&quot;&gt;Reference&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Today we will use R to establish a linear relationship between the price of a car and mpg(mileage).&lt;/p&gt;
 
 &lt;h2 id=&quot;know-about-data&quot;&gt;Know about data&lt;/h2&gt;
 
