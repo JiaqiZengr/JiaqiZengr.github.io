@@ -6,6 +6,9 @@ categories: [Data Analysis]
 tag: [Regression, R]
 ---
 
+1. Taaaa
+{:toc}
+
 Today we will use R to establish a linear relationship between the price of a car and mpg(mileage).
 
 ## Know about data
