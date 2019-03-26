@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Linear Regression Empirical Analysis in R - Jiaqi Zeng</title>
+
+	<link rel="shortcut icon" href="/styles/images/favicon.jpg">
+	<link rel="icon" href="/styles/images/favicon.jpg">
+
+	<link rel="stylesheet" href="/styles/css/index.css">
+	<link rel="stylesheet" href="/styles/css/fontawesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/styles/css/syntax.css">
+	<link rel="canonical" href="/data%20analysis/linear-regression-empirical-analysis-in-r/">
+	<link rel="alternate" type="application/rss+xml" title="Jiaqi Zeng" href="/feed.xml">
+	
+	<meta name="keywords" content="Linear Regression Empirical Analysis in R, Jiaqi Zeng, 曾佳琪;个人博客">
+	<meta name="description" content="曾佳琪;个人博客">
+
+	<script src="/styles/js/jquery.min.js"></script>
+	<!-- <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+	<!-- <script src="https://cdn.bootcss.com/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> -->
+	<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+		tex2jax: {
+			inlineMath: [['$','$'], ['\\(','\\)']],
+			processEscapes: true
+		}
+		});
+		</script>
+	<!--[if lt IE 9]>
+    	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  	<![endif]-->
+  	<style type="text/css">
+	  	.docs-content{
+	  		margin-bottom: 10px;
+	  	}
+  	</style>
+</head>
+
+  <body class="index">
+
+    <header class="navbar navbar-inverse navbar-fixed-top docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand">
+        Gaby
+      </a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">    
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/categories/">Categories</a>
+        </li>
+        <li>
+          <a href="/tag">Tags</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a rel="nofollow" target="_blank" href="https://github.com/JiaqiZengr/">My Github</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+    <div class="docs-header" id="content">
+  <div class="container">
+  	
+  		<!--
+		    <h1>Linear Regression Empirical Analysis in R</h1>
+		    <p>Post on Mar 21, 2019 by <a href="/about">Jiaqi Zeng</a></p>
+		-->
+		    <h1>Best wishes</h1>
+    
+  </div>
+</div>
+    
+      
+<div class="banner">
+  <div class="container">
+  	
+    	<a href="/categories/#Data Analysis-ref">Data Analysis</a>	/
+    	<a href="/tag/#RegressionR-ref">RegressionR</a>
+    
+  </div>
+</div>
+
+    
+
+    <div class="container docs-container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="sidebar hidden-print" role="complementary">
+        <div id="navigation">
+  <h1>Contents</h1>
+  <ul class="nav sidenav">
+  </ul>
+</div>
+
+ 
+      </div>
+    </div>
+    <div class="col-md-9" role="main">
+      <div class="panel docs-content">
+        <div class="wrapper">
+            <header class="post-header">
+              <h1 class="post-title">Linear Regression Empirical Analysis in R</h1>
+              <!--
+                <p class="post-meta">Mar 21, 2019</p>
+              -->
+              <div class="meta">Posted on <span class="postdate">March 21, 2019</span> By <a target="_blank" href="https://JiaqiZengr.github.io">Jiaqi Zeng</a></div>
+              <br />
+            </header>
+            <article class="post-content">
+              <p>Today we will use R to establish a linear relationship between the price of a car and mpg(mileage).</p>
+
+<h2 id="know-about-data">Know about data</h2>
+
+<p>First of all, we import the auto.dta and view the first six observations for checking.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">haven</span><span class="p">)</span><span class="w">
+</span><span class="n">auto</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read_dta</span><span class="p">(</span><span class="s2">"auto.dta"</span><span class="p">)</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">auto</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## # A tibble: 6 x 12
+##   make  price   mpg rep78 headroom trunk weight length  turn displacement
+##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
+## 1 AMC ~  4099    22     3      2.5    11   2930    186    40          121
+## 2 AMC ~  4749    17     3      3      11   3350    173    40          258
+## 3 AMC ~  3799    22    NA      3      12   2640    168    35          121
+## 4 Buic~  4816    20     3      4.5    16   3250    196    40          196
+## 5 Buic~  7827    15     4      4      20   4080    222    43          350
+## 6 Buic~  5788    18     3      4      21   3670    218    43          231
+## # ... with 2 more variables: gear_ratio &lt;dbl&gt;, foreign &lt;dbl+lbl&gt;
+</code></pre></div></div>
+
+<h2 id="relationship-between-price-and-mpg">Relationship Between Price and Mpg</h2>
+
+<p>We caculate the correlation between price and mpg. Futhermore, we can draw a scatter plot to sketch their relationship.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cor</span><span class="p">(</span><span class="n">auto</span><span class="o">$</span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">auto</span><span class="o">$</span><span class="n">mpg</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## [1] -0.4685967
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">scatter.smooth</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">auto</span><span class="o">$</span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">auto</span><span class="o">$</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"price ~ mpg"</span><span class="p">,</span><span class="n">xlab</span><span class="o">=</span><span class="s2">"price"</span><span class="p">,</span><span class="w">
+     </span><span class="n">ylab</span><span class="o">=</span><span class="s2">"mpg"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/styles/images/linear-regression-empirical-analysis-in-r/chunk-1-1.png" alt="img1" /><!-- --></p>
+
+<p>Draw a density plot to scan the distribution of price.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">e</span><span class="m">1071</span><span class="p">)</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">density</span><span class="p">(</span><span class="n">auto</span><span class="o">$</span><span class="n">price</span><span class="p">),</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"Density Plot: price"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s2">"Frequency"</span><span class="p">,</span><span class="w"> </span><span class="n">sub</span><span class="o">=</span><span class="n">paste</span><span class="p">(</span><span class="s2">"Skewness:"</span><span class="p">,</span><span class="w"> </span><span class="nf">round</span><span class="p">(</span><span class="n">e</span><span class="m">1071</span><span class="o">::</span><span class="n">skewness</span><span class="p">(</span><span class="n">auto</span><span class="o">$</span><span class="n">price</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="p">)))</span><span class="w">  
+</span><span class="n">polygon</span><span class="p">(</span><span class="n">density</span><span class="p">(</span><span class="n">auto</span><span class="o">$</span><span class="n">price</span><span class="p">),</span><span class="w"> </span><span class="n">col</span><span class="o">=</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/styles/images/linear-regression-empirical-analysis-in-r/chunk-2-1.png" alt="img2" /><!-- --></p>
+
+<h2 id="linear-regression">Linear Regression</h2>
+
+<p>Now we find that price and mpg have negative relationship, when mpg increases, price decreases. In order to know it deeply, we use linear regression to analyze.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">linearMod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">price</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">auto</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">linearMod</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 
+## Call:
+## lm(formula = price ~ mpg, data = auto)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3184.2 -1886.9  -959.8  1359.7  9669.7 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 11253.06    1170.81   9.611 1.53e-14 ***
+## mpg          -238.89      53.08  -4.501 2.55e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2624 on 72 degrees of freedom
+## Multiple R-squared:  0.2196,	Adjusted R-squared:  0.2087 
+## F-statistic: 20.26 on 1 and 72 DF,  p-value: 2.546e-05
+</code></pre></div></div>
+<p>We use log(price) to replace price and do the previous process again.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">auto</span><span class="o">$</span><span class="n">lp</span><span class="o">&lt;-</span><span class="nf">log</span><span class="p">(</span><span class="n">auto</span><span class="o">$</span><span class="n">price</span><span class="p">)</span><span class="w">
+</span><span class="n">scatter.smooth</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">auto</span><span class="o">$</span><span class="n">lp</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">auto</span><span class="o">$</span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">main</span><span class="o">=</span><span class="s2">"log(price) ~ mpg"</span><span class="p">,</span><span class="w">
+     </span><span class="n">xlab</span><span class="o">=</span><span class="s2">"log(price)"</span><span class="p">,</span><span class="w"> </span><span class="n">ylab</span><span class="o">=</span><span class="s2">"mpg"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="/styles/images/linear-regression-empirical-analysis-in-r/chunk-4-1.png" alt="img3" /><!-- --></p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">linearMod</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">lp</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">mpg</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">auto</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">linearMod</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 
+## Call:
+## lm(formula = lp ~ mpg, data = auto)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.58486 -0.25525 -0.08595  0.22935  1.02393 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9.349342   0.153489  60.912  &lt; 2e-16 ***
+## mpg         -0.033277   0.006958  -4.782 8.93e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.344 on 72 degrees of freedom
+## Multiple R-squared:  0.2411,	Adjusted R-squared:  0.2305 
+## F-statistic: 22.87 on 1 and 72 DF,  p-value: 8.93e-06
+</code></pre></div></div>
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As seen in the results above, we can find that the p-values and t Statistic are statisticaly significant. But simple linear regression isn’t enough for idenifying casual effect, we will discuss it next time.</p>
+
+<h2 id="reference">Reference</h2>
+
+<ul>
+  <li><a href="r-statistics.co">r-statistics.co</a> by Selva Prabhakaran</li>
+</ul>
+
+            </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    <footer class="footer" role="contentinfo">
+	<div class="container">
+		<p class="copyright">Copyright &copy; 2018-2019 <a href="https://JiaqiZengr.github.io">Jiaqi Zeng</a>.</p>
+		<p>Powered by <a href="http://jekyllrb.com">Jekyll</a></p>
+	</div>
+</footer>
+
+<script src="/styles/js/jquery.min.js"></script>
+<script src="/styles/js/bootstrap.min.js"></script>
+<script src="/styles/js/holder.min.js"></script>
+<script src="/styles/js/lessismore.js"></script>
+<script src="/styles/js/application.js"></script>
+
+  </body>
+</html>
