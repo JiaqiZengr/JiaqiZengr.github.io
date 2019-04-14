@@ -3,7 +3,7 @@ layout: post
 title: Linear Regression Empirical Analysis in R
 date: "2019-03-21 21:32:00 +0800"
 categories: [Data Analysis]
-tag: [Regression, R]
+tag: ["Regression", "R"]
 ---
 
 1. Taaaa
@@ -140,4 +140,4 @@ As seen in the results above, we can find that the p-values and t Statistic are 
 
 ## Reference
 
-* [r-statistics.co](r-statistics.co) by Selva Prabhakaran
+* [r-statistics.co](http://r-statistics.co) by Selva Prabhakaran
