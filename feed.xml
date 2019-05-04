@@ -5,9 +5,22 @@
     <description>Welcome to Jiaqi's space.</description>
     <link>https://JiaqiZengr.github.io/</link>
     <atom:link href="https://JiaqiZengr.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Apr 2019 16:19:02 +0800</pubDate>
-    <lastBuildDate>Sun, 14 Apr 2019 16:19:02 +0800</lastBuildDate>
+    <pubDate>Sat, 04 May 2019 12:19:30 +0800</pubDate>
+    <lastBuildDate>Sat, 04 May 2019 12:19:30 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Regression Tree</title>
+        <description>&lt;h3 id=&quot;this-is-homework-5-click-here&quot;&gt;This is homework 5. &lt;a href=&quot;https://jiaqizengr.github.io/resources/Regression_Tree.pdf&quot;&gt;Click here&lt;/a&gt;&lt;/h3&gt;
+</description>
+        <pubDate>Sat, 04 May 2019 12:17:00 +0800</pubDate>
+        <link>https://JiaqiZengr.github.io/data%20analysis/regression-tree/</link>
+        <guid isPermaLink="true">https://JiaqiZengr.github.io/data%20analysis/regression-tree/</guid>
+        
+        
+        <category>Data Analysis</category>
+        
+      </item>
     
       <item>
         <title>K Nearest Neighbors</title>
